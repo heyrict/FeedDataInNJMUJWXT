@@ -25,8 +25,9 @@ def extract_data(filename,
 
     df = pd.read_excel(filename, sheet_name=sheet)
     export_list = list(df.apply(extract_record, axis=1))
+    __import__("pdb").set_trace()
     export_dict = dict(export_list)
-    return str(export_list)
+    return str(export_dict)
 
 
 def get_prompt_msg(prompt, default=None):
@@ -40,9 +41,11 @@ def get_input(prompt="请输入", validate=None, process=None, default=None):
     if validate is not None:
         msg = validate(inp)
         while msg is not None:
-            inp = input(get_prompt_msg(prompt, default))
+            inp = input(get_prompt_msg(msg, default))
             msg = validate(inp)
 
+    if inp == '':
+        return default
     if process:
         return process(inp)
     return inp
@@ -62,8 +65,10 @@ if __name__ == "__main__":
     qz = get_input("请输入期中成绩的列名", default=None)
     qm = get_input("请输入期末成绩的列名", default=None)
     zp = get_input("请输入总评成绩的列名", default=None)
-    data = extract_data(filename, sheet, key, value)
+    data = extract_data(filename, sheet, key, ps, qz, qm, zp)
+    output_filename = "%s_%s.txt" % (filename, sheet)
     with open("paste_me_in_browser_console.js") as f:
         script = f.read()
-    with open("%s_%s" % (filename, sheet), "w") as f:
+    with open(output_filename, "w") as f:
         f.write(script[:7] + data + script[9:])
+        print("Output write to %s" % output_filename)
