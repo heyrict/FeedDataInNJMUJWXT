@@ -15,8 +15,8 @@ for (i in tbody.children) {
   if (tr.children === undefined) continue;
   var studentid = tr.children[1].innerText;
   var scores = data[parseInt(studentid)]; /* 假定导出表格学号栏数据格式为整数 */
-  fillcol(tr, 2, score.ps);
-  fillcol(tr, 3, score.qz);
-  fillcol(tr, 4, score.qm);
-  fillcol(tr, 5, score.zp);
+  fillcol(tr, 2, scores.ps);
+  fillcol(tr, 3, scores.qz);
+  fillcol(tr, 4, scores.qm);
+  fillcol(tr, 5, scores.zp);
 }
