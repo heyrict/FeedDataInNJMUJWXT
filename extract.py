@@ -24,8 +24,8 @@ def extract_data(filename,
         return [record[key], returns]
 
     df = pd.read_excel(filename, sheet_name=sheet)
+    df.fillna({ps: 0, qz: 0, qm: 0, zp: 0}, inplace=True)
     export_list = list(df.apply(extract_record, axis=1))
-    __import__("pdb").set_trace()
     export_dict = dict(export_list)
     return str(export_dict)
 
